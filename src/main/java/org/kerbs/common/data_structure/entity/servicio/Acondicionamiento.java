@@ -1,11 +1,12 @@
 package org.kerbs.common.data_structure.entity.servicio;
 
-import com.kerbs.invoicingservice.entity.Heladera;
-import com.kerbs.invoicingservice.entity.facturable.Reparacion;
+
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.Setter;
+import org.kerbs.common.data_structure.entity.Heladera;
+import org.kerbs.common.data_structure.entity.facturable.Reparacion;
 
 import java.time.LocalDate;
 import java.util.ArrayList;

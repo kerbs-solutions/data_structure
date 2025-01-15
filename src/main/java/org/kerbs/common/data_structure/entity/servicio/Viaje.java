@@ -1,11 +1,11 @@
 package org.kerbs.common.data_structure.entity.servicio;
 
-import com.kerbs.invoicingservice.entity.facturable.Movimiento;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.NonNull;
+import org.kerbs.common.data_structure.entity.facturable.Movimiento;
 
 import java.time.LocalDate;
 import java.util.List;
