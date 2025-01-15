@@ -1,3 +1,3 @@
 [submodule "common-data-structure"]
     path = common-data-structure
-    url = <URL-to-common-jpa-repo>
+    url = https://github.com/kerbs-solutions/common-data-structure
