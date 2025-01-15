@@ -1,0 +1,3 @@
+[submodule "common-data-structure"]
+    path = common-data-structure
+    url = <URL-to-common-jpa-repo>
