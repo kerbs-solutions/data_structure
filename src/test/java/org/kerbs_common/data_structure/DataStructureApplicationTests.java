@@ -1,4 +1,4 @@
-package org.kerbs.common.data_structure;
+package org.kerbs_common.data_structure;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

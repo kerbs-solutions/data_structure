@@ -1,3 +1,5 @@
+# deprecated
+
 Build the Library
 Navigate to the data-structure folder and build the library:
 
@@ -11,12 +13,13 @@ Add the Dependency
 In the kerbs-informes-back/pom.xml, add the data-structure dependency:
 
 <dependency>
-    <groupId>com.kerbs</groupId>
-    <artifactId>data-structure</artifactId>
-    <version>1.0.0</version>
+     <groupId>org.kerbs.common</groupId>
+    <artifactId>data_structure</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
 </dependency>
 
 Build the other project
+command to force maven reindexing for the other project: mvn dependency:purge-local-repository
 
 --------------------------------------
 
@@ -39,3 +42,11 @@ Update the kerbs-informes-back/pom.xml dependency version to match the new versi
     <version>1.1.0</version>
 </dependency>
 Rebuild kerbs-informes-back to use the updated library.
+
+### ---------------------------------------------------------------
+
+# REMOTE DEPLOYMENT 
+
+run mvn deploy. everything is configured to be deployed in:
+
+https://github.com/kerbs-solutions/data_structure/packages/

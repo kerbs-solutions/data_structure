@@ -1,4 +1,4 @@
-package org.kerbs.common.data_structure.entity.facturable;
+package org.kerbs_common.data_structure.entity.facturable;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.MappedSuperclass;

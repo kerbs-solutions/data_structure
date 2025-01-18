@@ -1,4 +1,4 @@
-package org.kerbs.common.data_structure.entity.servicio;
+package org.kerbs_common.data_structure.entity.servicio;
 
 import jakarta.persistence.*;
 import lombok.Getter;

@@ -1,10 +1,10 @@
-package org.kerbs.common.data_structure.entity.facturable;
+package org.kerbs_common.data_structure.entity.facturable;
 
 import jakarta.persistence.*;
 import lombok.NonNull;
-import org.kerbs.common.data_structure.entity.Heladera;
-import org.kerbs.common.data_structure.entity.precio.Precio;
-import org.kerbs.common.data_structure.entity.servicio.Viaje;
+import org.kerbs_common.data_structure.entity.Heladera;
+import org.kerbs_common.data_structure.entity.precio.Precio;
+import org.kerbs_common.data_structure.entity.servicio.Viaje;
 
 @Entity
 @Table(name = "movimiento")

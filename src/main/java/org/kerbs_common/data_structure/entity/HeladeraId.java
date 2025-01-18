@@ -1,4 +1,4 @@
-package org.kerbs.common.data_structure.entity;
+package org.kerbs_common.data_structure.entity;
 
 import lombok.Getter;
 import lombok.Setter;

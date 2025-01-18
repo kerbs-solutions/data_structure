@@ -1,9 +1,9 @@
-package org.kerbs.common.data_structure.entity;
+package org.kerbs_common.data_structure.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;
-import org.kerbs.common.data_structure.entity.facturable.Movimiento;
-import org.kerbs.common.data_structure.entity.servicio.Acondicionamiento;
+import org.kerbs_common.data_structure.entity.facturable.Movimiento;
+import org.kerbs_common.data_structure.entity.servicio.Acondicionamiento;
 
 import java.util.ArrayList;
 import java.util.List;

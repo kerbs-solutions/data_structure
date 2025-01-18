@@ -1,4 +1,4 @@
-package org.kerbs.common.data_structure.entity.precio;
+package org.kerbs_common.data_structure.entity.precio;
 
 import jakarta.persistence.*;
 import lombok.Getter;

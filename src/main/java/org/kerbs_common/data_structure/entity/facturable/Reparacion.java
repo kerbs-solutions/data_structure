@@ -1,10 +1,10 @@
-package org.kerbs.common.data_structure.entity.facturable;
+package org.kerbs_common.data_structure.entity.facturable;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.Setter;
-import org.kerbs.common.data_structure.entity.precio.Precio;
-import org.kerbs.common.data_structure.entity.servicio.Acondicionamiento;
+import org.kerbs_common.data_structure.entity.precio.Precio;
+import org.kerbs_common.data_structure.entity.servicio.Acondicionamiento;
 
 import java.util.Objects;
 

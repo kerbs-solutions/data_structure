@@ -1,4 +1,4 @@
-package org.kerbs.common.data_structure;
+package org.kerbs_common.data_structure;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
