@@ -20,6 +20,10 @@ public class Repuesto extends Precio {
         super(id, precio, descripcion);
     }
 
+    public Repuesto(@NonNull String id){
+        super(id);
+    }
+
     @Override
     public double getPrecioTotal() {
         return this.getValor();

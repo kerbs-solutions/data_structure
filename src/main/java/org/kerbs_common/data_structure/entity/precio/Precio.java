@@ -33,6 +33,11 @@ public abstract class Precio {
         this.descripcion = descripcion;
     }
 
+
+    public Precio(@NonNull String id) {
+        this.id = id;
+    }
+
     protected Precio() {
     }
 

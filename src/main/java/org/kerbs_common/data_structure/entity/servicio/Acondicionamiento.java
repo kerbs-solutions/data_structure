@@ -5,17 +5,20 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.Setter;
+import lombok.extern.java.Log;
 import org.kerbs_common.data_structure.entity.Heladera;
 import org.kerbs_common.data_structure.entity.facturable.Reparacion;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 @Entity
 @Table(name = "acondicionamiento")
 @Getter
+@Log
 public class Acondicionamiento extends Servicio {
 
     @Column(name = "acond_fecha_asignacion")
@@ -28,7 +31,7 @@ public class Acondicionamiento extends Servicio {
     private LocalDate fechaSalida; //analizar movimiento
 
 
-    @OneToMany(mappedBy = "acondicionamiento",cascade=CascadeType.ALL)
+    @OneToMany(mappedBy = "acondicionamiento",cascade=CascadeType.ALL,orphanRemoval = true)
     private List<Reparacion> reparaciones;
 
     @ManyToOne
@@ -63,11 +66,39 @@ public class Acondicionamiento extends Servicio {
     }
 
 
-    public void updateReparaciones(List<Reparacion>reparaciones){
+    public void updateReparaciones(List<Reparacion> reparacionesUpdated){
 
-        reparaciones.forEach(reparacion -> reparacion.setAcondicionamiento(this));
-        this.reparaciones.clear();
-        this.reparaciones.addAll(reparaciones);
+        List<Reparacion> reparacionesUpdatedMutable = new ArrayList<>(reparacionesUpdated);
+
+        reparacionesUpdatedMutable.forEach(reparacion -> reparacion.setAcondicionamiento(this));
+
+        //DELETING
+        List<Reparacion> deletedReparaciones = this.reparaciones.stream().filter(
+                reparacion -> !reparacionesUpdatedMutable.contains(reparacion)
+        ).toList();
+        reparacionesUpdatedMutable.removeAll(deletedReparaciones);
+        this.removeReparaciones(deletedReparaciones);
+
+        //CREATING
+        List<Reparacion> newReparaciones = reparacionesUpdatedMutable.stream().filter(reparacion -> reparacion.getId() == 0).toList();
+        reparacionesUpdatedMutable.removeAll(newReparaciones);
+        this.reparaciones.addAll(newReparaciones);
+
+        //UPDATING
+        reparacionesUpdatedMutable.forEach(updatedReparacion -> this.getReparacion(updatedReparacion.getId()).update(updatedReparacion));
+
+        log.info("Created " + newReparaciones.size() + " reparaciones");
+        log.info("Updated " + reparacionesUpdatedMutable.size() + " reparaciones");
+
+    }
+
+    private Reparacion getReparacion(int id) {
+        return this.reparaciones.stream().filter(reparacion -> reparacion.getId() == id).findFirst().orElse(null);
+    }
+
+    public void removeReparaciones(@NonNull List<Reparacion> deletedReparaciones) {
+        this.reparaciones.removeAll(deletedReparaciones);
+        log.info("Deleted " + deletedReparaciones.size() + " reparaciones");
     }
 
 

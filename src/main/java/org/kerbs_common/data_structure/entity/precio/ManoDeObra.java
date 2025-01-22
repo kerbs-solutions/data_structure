@@ -21,6 +21,9 @@ public class ManoDeObra extends Precio {
         super(id, valor, descripcion);
     }
 
+    public ManoDeObra(@NonNull String id){
+        super(id);
+    }
 
     @Override
     public double getPrecioTotal() {

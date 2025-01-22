@@ -10,7 +10,7 @@
     </parent>
     <groupId>org.kerbs_common</groupId>
     <artifactId>data_structure</artifactId>
-    <version>1.0.5</version>
+    <version>1.0.3</version>
     <name>data_structure</name>
     <description>Data Structure Library for Kerbs</description>
     <properties>
@@ -75,6 +75,11 @@
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
             <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-web</artifactId>
+            <version>6.2.1</version>
         </dependency>
     </dependencies>
 

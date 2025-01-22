@@ -16,7 +16,7 @@ public abstract class Facturable {
     //es el que se debe tomar en cuenta para calcular el precio total de un servicio
     //el precio es solo una referencia al inventario a un precio general
     @Setter
-    protected double valoruUnitarioReal;
+    protected double valorUnitarioReal;
 
     abstract double getPrecioTotal();
 

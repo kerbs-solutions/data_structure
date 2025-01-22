@@ -3,6 +3,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.Setter;
+import org.hibernate.annotations.DynamicUpdate;
 import org.kerbs_common.data_structure.entity.precio.Precio;
 import org.kerbs_common.data_structure.entity.servicio.Acondicionamiento;
 
@@ -12,6 +13,7 @@ import java.util.Objects;
 @Table(name = "reparacion")
 @Getter
 @Setter
+@DynamicUpdate
 public class Reparacion extends Facturable {
 
     @Id
@@ -35,20 +37,20 @@ public class Reparacion extends Facturable {
     public Reparacion(@NonNull Precio precio, double cantidad) {
         this.precio = precio;
         this.cantidad = cantidad;
-        this.valoruUnitarioReal = precio.getValor();
+        this.valorUnitarioReal = precio.getValor();
     }
 
-    public Reparacion(@NonNull Precio precio, double valor, double cantidad) {
+    public Reparacion(@NonNull Precio precio, double valorUnirarioReal, double cantidad) {
         this.precio = precio;
         this.cantidad = cantidad;
-        this.valoruUnitarioReal = valor;
+        this.valorUnitarioReal = valorUnirarioReal;
     }
 
-    public Reparacion(int id, @NonNull Precio precio, double valor, double cantidad) {
+    public Reparacion(int id, @NonNull Precio precio, double valorUnirarioReal, double cantidad) {
         this.id = id;
         this.precio = precio;
         this.cantidad = cantidad;
-        this.valoruUnitarioReal = valor;
+        this.valorUnitarioReal = valorUnirarioReal;
     }
 
 
@@ -59,14 +61,15 @@ public class Reparacion extends Facturable {
 
     @Override
     public double getPrecioTotal() {
-        return this.getValoruUnitarioReal() * cantidad;
+        return this.getValorUnitarioReal() * cantidad;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Reparacion that)) return false;
-        return id == that.id && Objects.equals(acondicionamiento, that.acondicionamiento);
+      //  return id == that.id && Objects.equals(acondicionamiento, that.acondicionamiento);
+        return id == that.id;
     }
 
     @Override
@@ -81,5 +84,11 @@ public class Reparacion extends Facturable {
 
     public boolean isInvalid() {
         return isPrecioNull() || !(this.precio.getId().startsWith("MO") || this.precio.getId().startsWith("R"));
+    }
+
+    public void update(@NonNull Reparacion reparacionUpdated) {
+        this.precio = reparacionUpdated.getPrecio();
+        this.cantidad = reparacionUpdated.getCantidad();
+        this.valorUnitarioReal = reparacionUpdated.getValorUnitarioReal();
     }
 }

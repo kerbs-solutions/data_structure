@@ -42,7 +42,7 @@ public class Movimiento extends Facturable {
         this.precio = precio;
         this.kmExcedente = kmExcedente;
         this.viaje = viaje;
-        this.valoruUnitarioReal = valor;
+        this.valorUnitarioReal = valor;
     }
 
     public Movimiento(@NonNull Heladera heladera, @NonNull Precio precio, double valor, double kmExcedente, @NonNull Viaje viaje) {
@@ -50,7 +50,7 @@ public class Movimiento extends Facturable {
         this.precio = precio;
         this.kmExcedente = kmExcedente;
         this.viaje = viaje;
-        this.valoruUnitarioReal = valor;
+        this.valorUnitarioReal = valor;
     }
 
     public Movimiento(@NonNull Heladera heladera, @NonNull Precio precio,double kmExcedente, @NonNull Viaje viaje) {
@@ -58,7 +58,7 @@ public class Movimiento extends Facturable {
         this.precio = precio;
         this.kmExcedente = kmExcedente;
         this.viaje = viaje;
-        this.valoruUnitarioReal = this.precio.getValor();
+        this.valorUnitarioReal = this.precio.getValor();
     }
 
 
@@ -68,6 +68,6 @@ public class Movimiento extends Facturable {
     @Override
     public double getPrecioTotal() {
         //todo: considerar km excedente
-        return this.getValoruUnitarioReal();
+        return this.getValorUnitarioReal();
     }
 }
