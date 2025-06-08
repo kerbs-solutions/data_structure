@@ -51,6 +51,10 @@ public class Heladera {
     @Column(name = "heladera_en_taller")
     private boolean enTaller;
 
+    @ManyToOne
+    @JoinColumn(name = "heladera_tipo_id")
+    private TipoHeladera tipo;
+
     //todo: agregar datos de contacto al parsear terrand
 
     protected Heladera() {
@@ -69,6 +73,11 @@ public class Heladera {
         this.enTaller = enTaller;
         this.movimientos = new ArrayList<>();
         this.acondicionamientos = new ArrayList<>();
+    }
+
+    public Heladera(String empresa, String serie, String activo, String marca, String modelo, String numeroCliente, String razonSocial, String direccion, String localidad, boolean enTaller, TipoHeladera tipo) {
+        this(empresa, serie, activo, marca, modelo, numeroCliente, razonSocial, direccion, localidad, enTaller);
+        this.tipo = tipo;
     }
 
     public void addAcondcionamiento(Acondicionamiento acondicionamiento) {
