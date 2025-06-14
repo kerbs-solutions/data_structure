@@ -2,6 +2,7 @@ package org.kerbs_common.data_structure.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.Setter;
 import org.kerbs_common.data_structure.entity.facturable.Movimiento;
 import org.kerbs_common.data_structure.entity.servicio.Acondicionamiento;
 
@@ -26,14 +27,18 @@ public class Heladera {
     @OneToMany(mappedBy = "heladera", cascade = CascadeType.ALL)
     List<Acondicionamiento> acondicionamientos;
     @Column(name = "heladera_empresa")
+    @Setter
     private String empresa;
 
     @Column(name = "heladera_activo")
+    @Setter
     private String activo;
 
     @Column(name = "heladera_modelo")
+    @Setter
     private String modelo;
     @Column(name = "heladera_cliente_numero")
+    @Setter
     private String numeroCliente;
 
     //datos cliente actual
@@ -43,16 +48,21 @@ public class Heladera {
      *
      * */
     @Column(name = "heladera_cliente_razon_social")
+    @Setter
     private String razonSocial;
     @Column(name = "heladera_cliente_direccion")
+    @Setter
     private String direccion;
     @Column(name = "heladera_cliente_localidad")
+    @Setter
     private String localidad;
     @Column(name = "heladera_en_taller")
+    @Setter
     private boolean enTaller;
 
     @ManyToOne
     @JoinColumn(name = "heladera_tipo_id")
+    @Setter
     private TipoHeladera tipo;
 
     //todo: agregar datos de contacto al parsear terrand

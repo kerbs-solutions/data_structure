@@ -32,9 +32,19 @@ public class Reparacion extends Facturable {
     @Column(name = "reparacion_cantidad")
     private double cantidad;
 
+    @Column(name = "reparacion_observaciones")
+    private String observaciones;
+
     public Reparacion(@NonNull Precio precio, double cantidad) {
         this.precio = precio;
         this.cantidad = cantidad;
+        this.valoruUnitarioReal = precio.getValor();
+    }
+
+    public Reparacion(@NonNull Precio precio, double cantidad, String observaciones) {
+        this.precio = precio;
+        this.cantidad = cantidad;
+        this.observaciones = observaciones;
         this.valoruUnitarioReal = precio.getValor();
     }
 
@@ -44,10 +54,25 @@ public class Reparacion extends Facturable {
         this.valoruUnitarioReal = valor;
     }
 
+    public Reparacion(@NonNull Precio precio, double valor, double cantidad, String observaciones) {
+        this.precio = precio;
+        this.cantidad = cantidad;
+        this.observaciones = observaciones;
+        this.valoruUnitarioReal = valor;
+    }
+
     public Reparacion(int id, @NonNull Precio precio, double valor, double cantidad) {
         this.id = id;
         this.precio = precio;
         this.cantidad = cantidad;
+        this.valoruUnitarioReal = valor;
+    }
+
+    public Reparacion(int id, @NonNull Precio precio, double valor, double cantidad, String observaciones) {
+        this.id = id;
+        this.precio = precio;
+        this.cantidad = cantidad;
+        this.observaciones = observaciones;
         this.valoruUnitarioReal = valor;
     }
 

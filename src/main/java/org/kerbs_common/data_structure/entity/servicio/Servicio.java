@@ -3,6 +3,7 @@ package org.kerbs_common.data_structure.entity.servicio;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NonNull;
+import lombok.Setter;
 
 import java.util.Objects;
 
@@ -27,7 +28,13 @@ public abstract class Servicio{
     @Enumerated(EnumType.STRING)
     private EstadoContableServicio estadoContable;
 
+    @NonNull
+    @Column(name = "estado_operacion")
+    @Enumerated(EnumType.STRING)
+    private EstadoOperacion estadoOperacion;
+
     @Column(name = "acondicionamiento_nro_solicitud")
+    @Setter
     private int numeroSolicitud;
 
 
@@ -35,21 +42,27 @@ public abstract class Servicio{
     public Servicio(@NonNull EstadoServicio estadoServicio) {
         this.estado = estadoServicio;
         this.estadoContable = EstadoContableServicio.PENDIENTE_PROFORMA;
+        this.estadoOperacion = EstadoOperacion.PENDIENTE_INFORME;
     }
 
     public Servicio(int id){
         this.id = id;
+        this.estado = EstadoServicio.EN_PROCESO;
         this.estadoContable = EstadoContableServicio.PENDIENTE_PROFORMA;
+        this.estadoOperacion = EstadoOperacion.PENDIENTE_INFORME;
     }
     public Servicio(int id, EstadoServicio estadoServicio, int servicioSolicitud){
         this.id = id;
         this.estado = estadoServicio;
         this.estadoContable = EstadoContableServicio.PENDIENTE_PROFORMA;
+        this.estadoOperacion = EstadoOperacion.PENDIENTE_INFORME;
         this.numeroSolicitud = servicioSolicitud;
     }
 
     protected Servicio() {
+        this.estado = EstadoServicio.EN_PROCESO;
         this.estadoContable = EstadoContableServicio.PENDIENTE_PROFORMA;
+        this.estadoOperacion = EstadoOperacion.PENDIENTE_INFORME;
     }
 
     public EstadoServicio siguienteEstadoServicio() {
@@ -68,6 +81,15 @@ public abstract class Servicio{
         }
 
         return this.estadoContable;
+    }
+
+    public EstadoOperacion siguienteEstadoOperacion() {
+        EstadoOperacion siguienteEstado = this.estadoOperacion.getSiguienteEstado();
+        if(siguienteEstado!=null){
+            this.estadoOperacion = siguienteEstado;
+        }
+
+        return this.estadoOperacion;
     }
 
     public abstract double getPrecioTotal();
