@@ -26,9 +26,12 @@ public class Heladera {
     List<Movimiento> movimientos;
     @OneToMany(mappedBy = "heladera", cascade = CascadeType.ALL)
     List<Acondicionamiento> acondicionamientos;
-    @Column(name = "heladera_empresa")
+    
+    // Cliente relationship (can be Empresa or ClienteFinal)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "heladera_cliente_id", referencedColumnName = "cliente_id")
     @Setter
-    private String empresa;
+    private Cliente cliente;
 
     @Column(name = "heladera_activo")
     @Setter
@@ -70,8 +73,8 @@ public class Heladera {
     protected Heladera() {
     }
 
-    public Heladera(String empresa, String serie, String activo, String marca, String modelo, String numeroCliente, String razonSocial, String direccion, String localidad, boolean enTaller) {
-        this.empresa = empresa;
+    public Heladera(Cliente cliente, String serie, String activo, String marca, String modelo, String numeroCliente, String razonSocial, String direccion, String localidad, boolean enTaller) {
+        this.cliente = cliente;
         this.serie = serie;
         this.activo = activo;
         this.marca = marca;
@@ -85,8 +88,8 @@ public class Heladera {
         this.acondicionamientos = new ArrayList<>();
     }
 
-    public Heladera(String empresa, String serie, String activo, String marca, String modelo, String numeroCliente, String razonSocial, String direccion, String localidad, boolean enTaller, TipoHeladera tipo) {
-        this(empresa, serie, activo, marca, modelo, numeroCliente, razonSocial, direccion, localidad, enTaller);
+    public Heladera(Cliente cliente, String serie, String activo, String marca, String modelo, String numeroCliente, String razonSocial, String direccion, String localidad, boolean enTaller, TipoHeladera tipo) {
+        this(cliente, serie, activo, marca, modelo, numeroCliente, razonSocial, direccion, localidad, enTaller);
         this.tipo = tipo;
     }
 

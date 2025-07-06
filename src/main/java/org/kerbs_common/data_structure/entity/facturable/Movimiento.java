@@ -24,7 +24,7 @@ public class Movimiento extends Facturable {
     private Heladera heladera; //si es salida, el cliente se actualiza a destino, si es entrada, el cliente es el de origen
 
     @ManyToOne
-    @JoinColumn(name = "movimiento_inventario")
+    @JoinColumn(name = "precio_id", referencedColumnName = "id")
     @NonNull
     private Precio precio;
 
