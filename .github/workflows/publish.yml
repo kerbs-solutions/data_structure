@@ -3,8 +3,8 @@ name: Publish data_structure to GitHub Packages
 on:
   push:
     tags:
-      - 'v*.*.*'  # Triggers on version tags like v1.0.0, v1.1.0, etc.
-  workflow_dispatch:  # Allows manual triggering
+      - 'v*.*.*'
+  workflow_dispatch:
 
 jobs:
   publish:
@@ -14,52 +14,52 @@ jobs:
       packages: write
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-    - name: Set up JDK 21
-      uses: actions/setup-java@v4
-      with:
-        java-version: '21'
-        distribution: 'temurin'
-        cache: maven
-        server-id: github # Value of the distributionManagement/repository/id field of the pom.xml
-        server-username: MAVEN_USERNAME # env variable for username in deploy
-        server-password: MAVEN_PASSWORD # env variable for token in deploy
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+          cache: maven
+          server-id: github
+          server-username: MAVEN_USERNAME
+          server-password: MAVEN_PASSWORD
 
-    - name: Validate Maven configuration
-      run: ./mvnw validate
+      - name: Validate Maven configuration
+        run: ./mvnw validate
 
-    - name: Run tests
-      run: ./mvnw clean test
+      - name: Run tests
+        run: ./mvnw clean test
 
-    - name: Build library
-      run: ./mvnw clean compile package -DskipTests
+      - name: Build library
+        run: ./mvnw clean compile package -DskipTests
 
-    - name: Publish to GitHub Packages
-      run: ./mvnw deploy -DskipTests
-      env:
-        MAVEN_USERNAME: ${{ github.actor }}
-        MAVEN_PASSWORD: ${{ secrets.GITHUB_TOKEN }}
+      - name: Publish to GitHub Packages
+        run: ./mvnw deploy -DskipTests
+        env:
+          MAVEN_USERNAME: ${{ github.actor }}
+          MAVEN_PASSWORD: ${{ secrets.GITHUB_TOKEN }}
 
-    - name: Create Release
-      uses: softprops/action-gh-release@v1
-      if: startsWith(github.ref, 'refs/tags/')
-      with:
-        name: Release ${{ github.ref_name }}
-        body: |
-          ## Changes in this Release
-          - data_structure library version ${{ github.ref_name }}
-          - Compatible with kerbs-operations backend
-          
-          ## Installation
-          Add to your pom.xml:
-          ```xml
-          <dependency>
-              <groupId>org.kerbs_common</groupId>
-              <artifactId>data_structure</artifactId>
-              <version>${{ github.ref_name }}</version>
-          </dependency>
-          ```
-        draft: false
-        prerelease: false
+      - name: Create Release
+        uses: softprops/action-gh-release@v1
+        if: startsWith(github.ref, 'refs/tags/')
+        with:
+          name: Release ${{ github.ref_name }}
+          body: |
+            ## Changes in this Release
+            - data_structure library version ${{ github.ref_name }}
+            - Compatible with kerbs-operations backend
+            
+            ## Installation
+            Add to your pom.xml:
+            ```xml
+            <dependency>
+                <groupId>org.kerbs_common</groupId>
+                <artifactId>data_structure</artifactId>
+                <version>${{ github.ref_name }}</version>
+            </dependency>
+            ```
+          draft: false
+          prerelease: false
