@@ -10,7 +10,7 @@
     </parent>
     <groupId>org.kerbs_common</groupId>
     <artifactId>data_structure</artifactId>
-    <version>1.0.6</version>
+    <version>1.1.0</version>
     <name>data_structure</name>
     <description>Data Structure Library for Kerbs</description>
     <properties>
@@ -23,6 +23,20 @@
             <url>https://maven.pkg.github.com/kerbs-solutions/data_structure</url>
         </repository>
     </distributionManagement>
+
+    <!-- GitHub Packages Authentication -->
+    <repositories>
+        <repository>
+            <id>github</id>
+            <url>https://maven.pkg.github.com/kerbs-solutions/data_structure</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
     <dependencies>
         <!-- Spring Boot Starter Data JPA -->
         <dependency>
@@ -128,6 +142,34 @@
                         </goals>
                     </execution>
                 </executions>
+            </plugin>
+
+            <!-- Maven Deploy Plugin -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-deploy-plugin</artifactId>
+                <version>3.1.1</version>
+            </plugin>
+
+            <!-- Maven Javadoc Plugin -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>3.6.3</version>
+                <executions>
+                    <execution>
+                        <id>attach-javadocs</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <source>21</source>
+                    <failOnError>false</failOnError>
+                    <quiet>true</quiet>
+                </configuration>
             </plugin>
         </plugins>
     </build>

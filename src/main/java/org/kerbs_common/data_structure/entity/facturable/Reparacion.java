@@ -21,8 +21,11 @@ public class Reparacion extends Facturable {
 
     @ManyToOne(cascade = CascadeType.MERGE) //a new precio can be created from this association but deleting a reparacion does not delete existing precios
     //precio is only an inventary reference, not a real price, real price is set in field valorReal
-    @JoinColumn(name = "reparacion_precio_id")
+    @JoinColumn(name = "precio_id", referencedColumnName = "id")
     private Precio precio;
+    
+    // Note: Historical pricing is now handled via inherited valoruUnitarioReal from Facturable
+    // This eliminates the redundant valorHistorico field
 
     @ManyToOne
     @JoinColumn(name = "reparacion_acondicionamiento", referencedColumnName = "servicio_id")
@@ -105,6 +108,6 @@ public class Reparacion extends Facturable {
     }
 
     public boolean isInvalid() {
-        return isPrecioNull() || !(this.precio.getId().startsWith("MO") || this.precio.getId().startsWith("R"));
+        return isPrecioNull() || !(this.precio.getCodigo().startsWith("MO") || this.precio.getCodigo().startsWith("R"));
     }
 }
