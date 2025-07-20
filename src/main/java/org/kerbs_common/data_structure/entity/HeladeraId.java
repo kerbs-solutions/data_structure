@@ -9,7 +9,9 @@ import java.util.Objects;
 @Getter
 @Setter
 public class HeladeraId implements Serializable {
+    /** Heladera brand/make */
     private String marca;
+    /** Heladera serial number */
     private String serie;
 
     // Constructor por defecto

@@ -11,6 +11,9 @@ import java.time.LocalDate;
 import java.util.List;
 
 
+/**
+ * Entity representing travel services.
+ */
 @Entity
 @Table(name = "viaje")
 public class Viaje extends Servicio{
@@ -22,13 +25,21 @@ public class Viaje extends Servicio{
     @OneToMany(mappedBy = "viaje")
     private List<Movimiento> movimientos;
 
-
+    /**
+     * Constructor for new travel service.
+     * @param estadoServicio Service estado
+     * @param fechaResolucion Resolution date
+     * @param movimientos List of movements
+     */
     public Viaje(@NonNull EstadoServicio estadoServicio, LocalDate fechaResolucion, List<Movimiento> movimientos) {
         super(estadoServicio);
         this.fechaResolucion = fechaResolucion;
         this.movimientos = movimientos;
     }
 
+    /**
+     * Default constructor for JPA.
+     */
     protected Viaje() {
     }
 

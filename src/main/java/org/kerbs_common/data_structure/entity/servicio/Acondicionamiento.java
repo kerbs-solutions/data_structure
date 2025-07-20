@@ -77,6 +77,18 @@ public class Acondicionamiento extends Servicio {
         this.reparaciones = reparaciones;
     }
 
+    /**
+     * Constructor for new Acondicionamiento without ID (for creation with DB auto-increment).
+     * Uses default states and initializes reparaciones collection.
+     */
+    public Acondicionamiento(@NonNull EstadoServicio estadoServicio, LocalDate fechaAsignacion, String tecnico, String observaciones) {
+        super(estadoServicio);
+        this.fechaAsignacion = fechaAsignacion;
+        this.tecnico = tecnico;
+        this.observaciones = observaciones;
+        this.reparaciones = new ArrayList<>();
+    }
+
     public void addReparacion(Reparacion reparacion) {
         reparacion.setAcondicionamiento(this);
         this.reparaciones.add(reparacion);

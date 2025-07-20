@@ -6,6 +6,9 @@ import lombok.NonNull;
 
 import java.util.Objects;
 
+/**
+ * Entity representing refrigerator types.
+ */
 @Entity
 @Table(name = "tipo_heladera")
 @Getter
@@ -24,15 +27,27 @@ public class TipoHeladera {
     @Column(name = "tipo_activo")
     private boolean activo;
 
+    /**
+     * Default constructor for JPA.
+     */
     protected TipoHeladera() {
         this.activo = true;
     }
 
+    /**
+     * Constructor with description.
+     * @param descripcion Type description
+     */
     public TipoHeladera(@NonNull String descripcion) {
         this.descripcion = descripcion;
         this.activo = true;
     }
 
+    /**
+     * Constructor with description and active status.
+     * @param descripcion Type description
+     * @param activo Active status
+     */
     public TipoHeladera(@NonNull String descripcion, boolean activo) {
         this.descripcion = descripcion;
         this.activo = activo;
