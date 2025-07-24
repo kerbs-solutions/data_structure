@@ -35,13 +35,22 @@ public class Acondicionamiento extends Servicio {
     @OneToMany(mappedBy = "acondicionamiento",cascade=CascadeType.ALL)
     private List<Reparacion> reparaciones;
 
+    // New stable relationship using internal ID
     @ManyToOne
-    @JoinColumns({
-            @JoinColumn(name = "acond_heladera_marca", referencedColumnName = "heladera_marca"),
-            @JoinColumn(name = "acond_heladera_serie", referencedColumnName = "heladera_nro_serie")
-    })
+    @JoinColumn(name = "acond_heladera_internal_id", referencedColumnName = "heladera_internal_id")
     @Setter
     private Heladera heladera;
+
+    // Backward compatibility: maintain composite key columns for migration period
+    @Column(name = "acond_heladera_marca")
+    @Deprecated(since = "v009", forRemoval = false)
+    @Setter
+    private String heladeraMarca;
+    
+    @Column(name = "acond_heladera_serie") 
+    @Deprecated(since = "v009", forRemoval = false)
+    @Setter
+    private String heladeraSerie;
 
     @Column(name = "acond_tecnico")
     @Setter
@@ -146,7 +155,50 @@ public class Acondicionamiento extends Servicio {
         return !this.getEstadoContable().equals(EstadoContableServicio.PENDIENTE_PROFORMA);
     }
 
-
-
+    // Backward compatibility methods and sync logic
+    
+    /**
+     * Enhanced setHeladera to maintain composite key sync during migration period
+     */
+    public void setHeladera(Heladera heladera) {
+        this.heladera = heladera;
+        // Sync composite key fields for backward compatibility
+        if (heladera != null) {
+            this.heladeraMarca = heladera.getMarca();
+            this.heladeraSerie = heladera.getSerie();
+        } else {
+            this.heladeraMarca = null;
+            this.heladeraSerie = null;
+        }
+    }
+    
+    /**
+     * Backward compatibility getter for heladeraMarca
+     * @deprecated Use heladera.getMarca() instead
+     */
+    @Deprecated(since = "v009", forRemoval = false)
+    public String getHeladeraMarca() {
+        return heladeraMarca;
+    }
+    
+    /**
+     * Backward compatibility getter for heladeraSerie  
+     * @deprecated Use heladera.getSerie() instead
+     */
+    @Deprecated(since = "v009", forRemoval = false)
+    public String getHeladeraSerie() {
+        return heladeraSerie;
+    }
+    
+    /**
+     * Migration helper: set heladera by composite key lookup
+     * @deprecated Use setHeladera(Heladera) with internal ID lookup instead
+     */
+    @Deprecated(since = "v009", forRemoval = false)
+    public void setHeladeraByCompositeKey(String marca, String serie) {
+        this.heladeraMarca = marca;
+        this.heladeraSerie = serie;
+        // Note: heladera object should be set separately via repository lookup
+    }
 
 }
