@@ -85,6 +85,10 @@ public class Heladera {
     @Setter
     private String ubicacionActualComodato;
 
+    @Column(name = "heladera_ubicacion_actual_telefono")
+    @Setter
+    private String ubicacionActualTelefono;
+
     @Column(name = "heladera_en_taller")
     @Setter
     private boolean enTaller;
@@ -183,6 +187,13 @@ public class Heladera {
         return getCurrentUbicacion().map(HeladeraUbicacion::getClienteLocalidad);
     }
 
+    /**
+     * Get current telefono (from active ubicacion)
+     */
+    public Optional<String> getCurrentTelefono() {
+        return getCurrentUbicacion().map(HeladeraUbicacion::getClienteTelefono);
+    }
+
     // V011: Getter methods for denormalized ubicacion columns
     // These provide fast access to current location data without joins
 
@@ -221,17 +232,15 @@ public class Heladera {
         return ubicacionActualComodato;
     }
 
-    // Backward compatibility methods for composite key operations
-    
     /**
-     * Returns the composite key representation (marca, serie) for backward compatibility
-     * @deprecated Use internalId for stable identity. This method is maintained for legacy compatibility only.
+     * Get current telefono from denormalized column (fast performance)
      */
-    @Deprecated(since = "v009", forRemoval = false)
-    public HeladeraId getCompositeId() {
-        return new HeladeraId(marca, serie);
+    public String getUbicacionActualTelefono() {
+        return ubicacionActualTelefono;
     }
-    
+
+    // Backward compatibility methods for composite key operations
+
     /**
      * Creates a new Heladera with composite key compatibility
      * @deprecated Use constructor without ubicacion data - ubicaciones managed separately in S047

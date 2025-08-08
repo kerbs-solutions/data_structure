@@ -6,7 +6,6 @@ import lombok.NonNull;
 import lombok.Setter;
 import org.hibernate.annotations.DiscriminatorOptions;
 import org.hibernate.annotations.SQLRestriction;
-import org.kerbs_common.data_structure.entity.Cliente;
 
 import java.util.Objects;
 
@@ -14,7 +13,7 @@ import java.util.Objects;
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "precio_tipo", discriminatorType = DiscriminatorType.STRING)
 @DiscriminatorOptions(force = false)
-@SQLRestriction("activo = true") //automatic filtering
+@SQLRestriction("precio_activo = true") //automatic filtering
 @Getter
 public abstract class Precio {
     @Id
@@ -31,9 +30,6 @@ public abstract class Precio {
     @Column(name = "precio_plan")
     private String pricingPlan;
 
-    @Setter
-    @Column(name="precio_valor")
-    private double valor;
     
     @NonNull
     @Setter
@@ -45,7 +41,7 @@ public abstract class Precio {
     private org.kerbs_common.data_structure.entity.TipoHeladera tipoHeladera;
 
     @Setter
-    @Column(name = "activo")
+    @Column(name = "precio_activo")
     private boolean activo;
     
     @Column(name = "created_at")
@@ -54,23 +50,22 @@ public abstract class Precio {
     @Column(name = "updated_at") 
     private java.time.LocalDateTime updatedAt;
 
-    public Precio(@NonNull String codigo, @NonNull String pricingPlan, double valor, @NonNull String descripcion) {
+    public Precio(@NonNull String codigo, @NonNull String pricingPlan, @NonNull String descripcion) {
         this.codigo = codigo;
         this.pricingPlan = pricingPlan;
-        this.valor = valor;
         this.descripcion = descripcion;
         this.activo = true;
         this.createdAt = java.time.LocalDateTime.now();
         this.updatedAt = java.time.LocalDateTime.now();
     }
 
-    public Precio(@NonNull String codigo, @NonNull String pricingPlan, double valor, @NonNull String descripcion, org.kerbs_common.data_structure.entity.TipoHeladera tipoHeladera) {
-        this(codigo, pricingPlan, valor, descripcion);
+    public Precio(@NonNull String codigo, @NonNull String pricingPlan, @NonNull String descripcion, org.kerbs_common.data_structure.entity.TipoHeladera tipoHeladera) {
+        this(codigo, pricingPlan, descripcion);
         this.tipoHeladera = tipoHeladera;
     }
 
-    public Precio(@NonNull String codigo, @NonNull String pricingPlan, double valor, @NonNull String descripcion, org.kerbs_common.data_structure.entity.TipoHeladera tipoHeladera, boolean activo) {
-        this(codigo, pricingPlan, valor, descripcion, tipoHeladera);
+    public Precio(@NonNull String codigo, @NonNull String pricingPlan, @NonNull String descripcion, org.kerbs_common.data_structure.entity.TipoHeladera tipoHeladera, boolean activo) {
+        this(codigo, pricingPlan, descripcion, tipoHeladera);
         this.activo = activo;
     }
 

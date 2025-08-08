@@ -1,7 +1,7 @@
 package org.kerbs_common.data_structure.entity;
 
 import jakarta.persistence.*;
-
+import org.kerbs_common.data_structure.entity.facturable.Movimiento;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -71,6 +71,12 @@ public class HeladeraUbicacion {
     private String clienteLocalidad;
     
     /**
+     * Client phone number for contact purposes
+     */
+    @Column(name = "cliente_telefono")
+    private String clienteTelefono;
+    
+    /**
      * Date when heladera arrived at this client location
      */
     @Column(name = "fecha_inicio", nullable = false)
@@ -91,6 +97,15 @@ public class HeladeraUbicacion {
     private String estado = "ACTIVO";
     
     /**
+     * S050: Reference to the movimiento that brought the heladera TO this ubicacion
+     * This allows tracking which viaje/movimiento caused this placement
+     * Null for manual placements or initial heladera setup
+     */
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "movimiento_id", referencedColumnName = "servicio_id")
+    private Movimiento movimiento;
+    
+    /**
      * Audit fields for tracking record creation and updates
      */
     @Column(name = "created_at", nullable = false, updatable = false)
@@ -108,13 +123,14 @@ public class HeladeraUbicacion {
      */
     public HeladeraUbicacion(Heladera heladera, String numeroComodato, String numeroCliente,
                            String clienteRazonSocial, String clienteDireccion, 
-                           String clienteLocalidad, LocalDate fechaInicio) {
+                           String clienteLocalidad, String clienteTelefono, LocalDate fechaInicio) {
         this.heladera = heladera;
         this.numeroComodato = numeroComodato;
         this.numeroCliente = numeroCliente;
         this.clienteRazonSocial = clienteRazonSocial;
         this.clienteDireccion = clienteDireccion;
         this.clienteLocalidad = clienteLocalidad;
+        this.clienteTelefono = clienteTelefono;
         this.fechaInicio = fechaInicio;
         this.estado = "ACTIVO";
     }
@@ -191,6 +207,14 @@ public class HeladeraUbicacion {
         this.clienteLocalidad = clienteLocalidad;
     }
     
+    public String getClienteTelefono() {
+        return clienteTelefono;
+    }
+    
+    public void setClienteTelefono(String clienteTelefono) {
+        this.clienteTelefono = clienteTelefono;
+    }
+    
     public LocalDate getFechaInicio() {
         return fechaInicio;
     }
@@ -229,6 +253,14 @@ public class HeladeraUbicacion {
     
     public void setUpdatedAt(LocalDateTime updatedAt) {
         this.updatedAt = updatedAt;
+    }
+    
+    public Movimiento getMovimiento() {
+        return movimiento;
+    }
+    
+    public void setMovimiento(Movimiento movimiento) {
+        this.movimiento = movimiento;
     }
     
     // Business methods

@@ -24,21 +24,16 @@ public abstract class Servicio{
     @Setter
     private EstadoServicio estado;
 
-    @NonNull
-    @Column(name = "servicio_estado_contable")
-    @Enumerated(EnumType.STRING)
-    @Setter
-    private EstadoContableServicio estadoContable;
 
     @NonNull
-    @Column(name = "estado_operacion")
+    @Column(name = "servicio_estado_operacion")
     @Enumerated(EnumType.STRING)
     @Setter
     private EstadoOperacion estadoOperacion;
 
-    @Column(name = "acondicionamiento_nro_solicitud")
+    @Column(name = "servicio_numero_solicitud")
     @Setter
-    private int numeroSolicitud;
+    private Integer numeroSolicitud;
 
     /**
      * Constructor for new service with initial estado.
@@ -46,7 +41,6 @@ public abstract class Servicio{
      */
     public Servicio(@NonNull EstadoServicio estadoServicio) {
         this.estado = estadoServicio;
-        this.estadoContable = EstadoContableServicio.PENDIENTE_PROFORMA;
         this.estadoOperacion = EstadoOperacion.PENDIENTE_INFORME;
     }
 
@@ -57,7 +51,6 @@ public abstract class Servicio{
     public Servicio(int id){
         this.id = id;
         this.estado = EstadoServicio.EN_PROCESO;
-        this.estadoContable = EstadoContableServicio.PENDIENTE_PROFORMA;
         this.estadoOperacion = EstadoOperacion.PENDIENTE_INFORME;
     }
     
@@ -67,17 +60,15 @@ public abstract class Servicio{
      * @param estadoServicio Service estado
      * @param servicioSolicitud Service solicitud number
      */
-    public Servicio(int id, EstadoServicio estadoServicio, int servicioSolicitud){
+    public Servicio(int id, EstadoServicio estadoServicio, Integer servicioSolicitud){
         this.id = id;
         this.estado = estadoServicio;
-        this.estadoContable = EstadoContableServicio.PENDIENTE_PROFORMA;
         this.estadoOperacion = EstadoOperacion.PENDIENTE_INFORME;
         this.numeroSolicitud = servicioSolicitud;
     }
 
     protected Servicio() {
         this.estado = EstadoServicio.EN_PROCESO;
-        this.estadoContable = EstadoContableServicio.PENDIENTE_PROFORMA;
         this.estadoOperacion = EstadoOperacion.PENDIENTE_INFORME;
     }
 
@@ -94,18 +85,6 @@ public abstract class Servicio{
         return this.estado;
     }
 
-    /**
-     * Advances to next contable estado if possible.
-     * @return Current contable estado after advancement
-     */
-    public EstadoContableServicio siguienteEstadoContableServicio() {
-        EstadoContableServicio siguienteEstado = this.estadoContable.getSiguienteEstado();
-        if(siguienteEstado!=null){
-            this.estadoContable = siguienteEstado;
-        }
-
-        return this.estadoContable;
-    }
 
     /**
      * Advances to next operation estado if possible.

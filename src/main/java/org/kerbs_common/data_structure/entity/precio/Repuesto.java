@@ -15,19 +15,20 @@ public class Repuesto extends Precio {
     protected Repuesto() {
     }
 
-    public Repuesto(@NonNull String id, @NonNull String pricingPlan, double precio, @NonNull String descripcion) {
-        super(id, pricingPlan, precio, descripcion);
+    public Repuesto(@NonNull String id, @NonNull String pricingPlan, @NonNull String descripcion) {
+        super(id, pricingPlan, descripcion);
     }
     
     // Legacy constructor for backward compatibility during migration - uses STANDARD pricing
     @Deprecated
-    public Repuesto(@NonNull String id, double precio, @NonNull String descripcion) {
-        super(id, "STANDARD", precio, descripcion); // Default to STANDARD pricing plan
+    public Repuesto(@NonNull String id, @NonNull String descripcion) {
+        super(id, "STANDARD", descripcion); // Default to STANDARD pricing plan
     }
 
     @Override
     public double getPrecioTotal() {
-        return this.getValor();
+        // Since valor field was removed, pricing should be handled externally
+        return 0.0;
     }
 
     //todo: cantidad para manejar el inventario

@@ -41,42 +41,20 @@ public class Reparacion extends Facturable {
     public Reparacion(@NonNull Precio precio, double cantidad) {
         this.precio = precio;
         this.cantidad = cantidad;
-        this.valoruUnitarioReal = precio.getValor();
     }
 
     public Reparacion(@NonNull Precio precio, double cantidad, String observaciones) {
         this.precio = precio;
         this.cantidad = cantidad;
         this.observaciones = observaciones;
-        this.valoruUnitarioReal = precio.getValor();
     }
 
-    public Reparacion(@NonNull Precio precio, double valor, double cantidad) {
-        this.precio = precio;
-        this.cantidad = cantidad;
-        this.valoruUnitarioReal = valor;
-    }
 
-    public Reparacion(@NonNull Precio precio, double valor, double cantidad, String observaciones) {
-        this.precio = precio;
-        this.cantidad = cantidad;
-        this.observaciones = observaciones;
-        this.valoruUnitarioReal = valor;
-    }
-
-    public Reparacion(int id, @NonNull Precio precio, double valor, double cantidad) {
-        this.id = id;
-        this.precio = precio;
-        this.cantidad = cantidad;
-        this.valoruUnitarioReal = valor;
-    }
-
-    public Reparacion(int id, @NonNull Precio precio, double valor, double cantidad, String observaciones) {
+    public Reparacion(int id, @NonNull Precio precio, double cantidad, String observaciones) {
         this.id = id;
         this.precio = precio;
         this.cantidad = cantidad;
         this.observaciones = observaciones;
-        this.valoruUnitarioReal = valor;
     }
 
 
@@ -87,7 +65,9 @@ public class Reparacion extends Facturable {
 
     @Override
     public double getPrecioTotal() {
-        return this.getValoruUnitarioReal() * cantidad;
+        // Since valoruUnitarioReal was removed, return 0 for now
+        // Pricing logic should be handled by other microservices
+        return 0.0;
     }
 
     @Override

@@ -41,16 +41,6 @@ public class Acondicionamiento extends Servicio {
     @Setter
     private Heladera heladera;
 
-    // Backward compatibility: maintain composite key columns for migration period
-    @Column(name = "acond_heladera_marca")
-    @Deprecated(since = "v009", forRemoval = false)
-    @Setter
-    private String heladeraMarca;
-    
-    @Column(name = "acond_heladera_serie") 
-    @Deprecated(since = "v009", forRemoval = false)
-    @Setter
-    private String heladeraSerie;
 
     @Column(name = "acond_tecnico")
     @Setter
@@ -61,7 +51,7 @@ public class Acondicionamiento extends Servicio {
     private String observaciones;
 
 
-    public Acondicionamiento(int id, int numeroSolicitud, @NonNull EstadoServicio estadoServicio, LocalDate fechaAsignacion, LocalDate fechaIngreso, LocalDate fechaResolucion, LocalDate fechaSalida) {
+    public Acondicionamiento(int id, Integer numeroSolicitud, @NonNull EstadoServicio estadoServicio, LocalDate fechaAsignacion, LocalDate fechaIngreso, LocalDate fechaResolucion, LocalDate fechaSalida) {
         super(id,estadoServicio,numeroSolicitud);
         this.fechaAsignacion = fechaAsignacion;
         this.fechaIngreso = fechaIngreso;
@@ -70,7 +60,7 @@ public class Acondicionamiento extends Servicio {
         this.reparaciones = new ArrayList<>();
     }
 
-    public Acondicionamiento(int id, int numeroSolicitud, @NonNull EstadoServicio estadoServicio, LocalDate fechaAsignacion, LocalDate fechaIngreso, LocalDate fechaResolucion, LocalDate fechaSalida, String tecnico, String observaciones) {
+    public Acondicionamiento(int id, Integer numeroSolicitud, @NonNull EstadoServicio estadoServicio, LocalDate fechaAsignacion, LocalDate fechaIngreso, LocalDate fechaResolucion, LocalDate fechaSalida, String tecnico, String observaciones) {
         super(id,estadoServicio,numeroSolicitud);
         this.fechaAsignacion = fechaAsignacion;
         this.fechaIngreso = fechaIngreso;
@@ -152,53 +142,13 @@ public class Acondicionamiento extends Servicio {
     }
 
     public boolean confirmada(){
-        return !this.getEstadoContable().equals(EstadoContableServicio.PENDIENTE_PROFORMA);
+        // Since estadoContable was removed, always return true for confirmed status
+        return true;
     }
 
-    // Backward compatibility methods and sync logic
-    
-    /**
-     * Enhanced setHeladera to maintain composite key sync during migration period
-     */
     public void setHeladera(Heladera heladera) {
         this.heladera = heladera;
-        // Sync composite key fields for backward compatibility
-        if (heladera != null) {
-            this.heladeraMarca = heladera.getMarca();
-            this.heladeraSerie = heladera.getSerie();
-        } else {
-            this.heladeraMarca = null;
-            this.heladeraSerie = null;
-        }
     }
     
-    /**
-     * Backward compatibility getter for heladeraMarca
-     * @deprecated Use heladera.getMarca() instead
-     */
-    @Deprecated(since = "v009", forRemoval = false)
-    public String getHeladeraMarca() {
-        return heladeraMarca;
-    }
-    
-    /**
-     * Backward compatibility getter for heladeraSerie  
-     * @deprecated Use heladera.getSerie() instead
-     */
-    @Deprecated(since = "v009", forRemoval = false)
-    public String getHeladeraSerie() {
-        return heladeraSerie;
-    }
-    
-    /**
-     * Migration helper: set heladera by composite key lookup
-     * @deprecated Use setHeladera(Heladera) with internal ID lookup instead
-     */
-    @Deprecated(since = "v009", forRemoval = false)
-    public void setHeladeraByCompositeKey(String marca, String serie) {
-        this.heladeraMarca = marca;
-        this.heladeraSerie = serie;
-        // Note: heladera object should be set separately via repository lookup
-    }
 
 }
